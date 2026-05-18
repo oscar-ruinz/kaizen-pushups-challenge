@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import datetime, date
 import os
+from zoneinfo import ZoneInfo
 
 import psycopg2
 from dotenv import load_dotenv
@@ -11,6 +12,12 @@ from pydantic import BaseModel, Field
 
 
 load_dotenv(override=True)
+
+APP_TIMEZONE = ZoneInfo(os.getenv("APP_TIMEZONE", "America/Mazatlan"))
+
+
+def today_local() -> date:
+    return datetime.now(APP_TIMEZONE).date()
 
 app = FastAPI(title="Push-ups Challenge API", version="1.0.0")
 
@@ -78,7 +85,7 @@ def get_today_record(conn, today: date) -> tuple[int, int]:
 
 @app.get("/api/today", response_model=TodayResponse)
 def load_today() -> TodayResponse:
-    today = date.today()
+    today = today_local()
 
     try:
         with get_connection() as conn:
@@ -96,7 +103,7 @@ def load_today() -> TodayResponse:
 
 @app.post("/api/add", response_model=TodayResponse)
 def add_pushups(payload: AddPushupsRequest) -> TodayResponse:
-    today = date.today()
+    today = today_local()
 
     try:
         with get_connection() as conn:
