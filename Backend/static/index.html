@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RETO ARCADE - LAGARTIJAS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+
+  <main class="screen">
+    <div class="cabinet">
+
+      <header class="screen-header">
+        <span class="led-indicator green"></span>
+        <h1 id="title">DAY --</h1>
+        <span class="led-indicator pink"></span>
+      </header>
+
+      <p class="subtitle">&gt;&gt; PUSH-UP CHALLENGE &lt;&lt;</p>
+
+      <div class="progress-section">
+        <div class="progress-ring-wrap">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="50" class="ring-bg"></circle>
+            <circle id="progress-ring" cx="60" cy="60" r="50" class="ring-fg"></circle>
+          </svg>
+          <div class="progress-center">
+            <span id="progress-percent">0%</span>
+            <span id="progress-remaining">-- LEFT</span>
+          </div>
+        </div>
+      </div>
+
+      <p id="count-display" class="count">0 / -- REPS</p>
+      <p id="goal-message" class="goal-message hidden">&gt;&gt; STAGE CLEARED &lt;&lt;</p>
+
+      <div class="action-row">
+        <button data-amount="10" class="action-btn green">+10</button>
+        <button data-amount="15" class="action-btn pink">+15</button>
+        <button data-amount="20" class="action-btn yellow">+20</button>
+      </div>
+
+      <div class="custom-section">
+        <p class="custom-label">CUSTOM INPUT</p>
+        <div class="custom-input-row">
+          <input
+            id="custom-amount-input"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            step="1"
+            placeholder="??"
+          />
+          <button id="add-custom-btn">PUSH</button>
+        </div>
+        <p id="custom-amount-feedback" class="feedback" data-state="default">INSERT VALUE &gt; 0</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

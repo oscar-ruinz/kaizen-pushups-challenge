@@ -2,36 +2,26 @@ from __future__ import annotations
 
 from datetime import datetime, date
 import os
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import psycopg2
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 
 load_dotenv(override=True)
 
 APP_TIMEZONE = ZoneInfo(os.getenv("APP_TIMEZONE", "America/Mazatlan"))
+STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
 def today_local() -> date:
     return datetime.now(APP_TIMEZONE).date()
 
-app = FastAPI(
-    title="Push-ups Challenge API",
-    version="1.0.0",
-    root_path=os.getenv("ROOT_PATH", ""),
-)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI(title="Push-ups Challenge API", version="1.0.0")
 
 
 class TodayResponse(BaseModel):
@@ -136,3 +126,6 @@ def add_pushups(payload: AddPushupsRequest) -> TodayResponse:
         target_count=int(row[0]),
         current_count=int(row[1] or 0),
     )
+
+
+app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
