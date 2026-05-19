@@ -19,7 +19,11 @@ APP_TIMEZONE = ZoneInfo(os.getenv("APP_TIMEZONE", "America/Mazatlan"))
 def today_local() -> date:
     return datetime.now(APP_TIMEZONE).date()
 
-app = FastAPI(title="Push-ups Challenge API", version="1.0.0")
+app = FastAPI(
+    title="Push-ups Challenge API",
+    version="1.0.0",
+    root_path=os.getenv("ROOT_PATH", ""),
+)
 
 app.add_middleware(
     CORSMiddleware,
