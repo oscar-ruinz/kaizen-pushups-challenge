@@ -1,5 +1,5 @@
-// URL base de la API. Deja vacío para usar el mismo origen o escribe la URL pública.
-const API_BASE_URL = "https://api-pushups.ruinz.cloud";
+// URL base de la API. Vacío = mismo origen (backend servido bajo /api/* en el mismo dominio).
+const API_BASE_URL = "";
 
 // Textos del UI (estilo arcade en inglés/uppercase).
 const TEXT_TITLE             = (day) => `DAY ${day}`;
