@@ -128,4 +128,7 @@ def add_pushups(payload: AddPushupsRequest) -> TodayResponse:
     )
 
 
-app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+if STATIC_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+else:
+    print(f"[startup] WARN: static dir not found at {STATIC_DIR} — frontend no se servirá")
